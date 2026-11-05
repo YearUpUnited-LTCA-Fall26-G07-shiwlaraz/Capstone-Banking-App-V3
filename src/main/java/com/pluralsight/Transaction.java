@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Transaction {
     private LocalDate date;
@@ -165,6 +166,15 @@ public class Transaction {
     }
     public static void displayAllTransactions () {
         ArrayList<Transaction> transactions = readTransactions();
+        sortTransactions(transactions);
+
+        System.out.printf(
+                "%-12s | %-10s | %-20s | %-18s | %12s | %12s%n",
+                "Date", "Time", "Description", "Vendor", "Amount", "Balance"
+        );
+
+        System.out.println("-".repeat(98));
+
         for (Transaction t : transactions) {
             System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
                     t.getDate(),
@@ -177,6 +187,14 @@ public class Transaction {
     }
     public static void displayDeposits() {
         ArrayList<Transaction> transactions = readTransactions();
+        sortTransactions(transactions);
+
+        System.out.printf(
+                "%-12s | %-10s | %-20s | %-18s | %12s | %12s%n",
+                "Date", "Time", "Description", "Vendor", "Amount", "Balance"
+        );
+
+        System.out.println("-".repeat(98));
 
         for (Transaction t : transactions) {
             if (t.getAmount() > 0) {
@@ -192,6 +210,15 @@ public class Transaction {
     }
     public static void displayPayments() {
         ArrayList<Transaction> transactions = readTransactions();
+        sortTransactions(transactions);
+
+        System.out.printf(
+                "%-12s | %-10s | %-20s | %-18s | %12s | %12s%n",
+                "Date", "Time", "Description", "Vendor", "Amount", "Balance"
+        );
+
+        System.out.println("-".repeat(98));
+
         for (Transaction t : transactions) {
             if (t.getAmount() < 0) {
                 System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
@@ -206,8 +233,17 @@ public class Transaction {
     }
     public static void displayReportMonthToDate() {
         ArrayList<Transaction> transactions = readTransactions();
+        sortTransactions(transactions);
+
         LocalDate startDate = LocalDate.now().withDayOfMonth(1);
         LocalDate endDate = LocalDate.now();
+
+        System.out.printf(
+                "%-12s | %-10s | %-20s | %-18s | %12s | %12s%n",
+                "Date", "Time", "Description", "Vendor", "Amount", "Balance"
+        );
+
+        System.out.println("-".repeat(98));
 
         for (Transaction t : transactions) {
             LocalDate date = t.getDate();
@@ -224,10 +260,16 @@ public class Transaction {
     }
     public static void displayReportOfPreviousMonth() {
         ArrayList<Transaction> transactions = readTransactions();
+        sortTransactions(transactions);
+
         LocalDate startDate = LocalDate.now().minusMonths(1).withDayOfMonth(1);
         LocalDate endDate = LocalDate.now().withDayOfMonth(1).minusDays(1);
 
-
+        System.out.printf(
+                "%-12s | %-10s | %-20s | %-18s | %12s | %12s%n",
+                "Date", "Time", "Description", "Vendor", "Amount", "Balance"
+        );
+        System.out.println("-".repeat(98));
 
         for (Transaction t : transactions) {
             LocalDate date = t.getDate();
@@ -244,10 +286,17 @@ public class Transaction {
     }
     public static void displayReportYearToDate() {
         ArrayList<Transaction> transactions = readTransactions();
-
+        sortTransactions(transactions);
 
         LocalDate startDate = LocalDate.now().withMonth(1).withDayOfMonth(1);
         LocalDate endDate = LocalDate.now();
+
+        System.out.printf(
+                "%-12s | %-10s | %-20s | %-18s | %12s | %12s%n",
+                "Date", "Time", "Description", "Vendor", "Amount", "Balance"
+        );
+
+        System.out.println("-".repeat(98));
 
         for (Transaction t : transactions) {
             LocalDate date = t.getDate();
@@ -265,9 +314,17 @@ public class Transaction {
 
     public static void displayReportOfPreviousYear() {
         ArrayList<Transaction> transactions = readTransactions();
+        sortTransactions(transactions);
 
-        LocalDate startDate = LocalDate.now().minusYears(1).withMonth(1).withDayOfMonth(1);
-        LocalDate endDate = LocalDate.now().withMonth(1).minusDays(1);
+        LocalDate startDate = LocalDate.now().minusYears(1).withDayOfYear(1);
+        LocalDate endDate = LocalDate.now().withDayOfYear(1).minusDays(1);
+
+        System.out.printf(
+                "%-12s | %-10s | %-20s | %-18s | %12s | %12s%n",
+                "Date", "Time", "Description", "Vendor", "Amount", "Balance"
+        );
+
+        System.out.println("-".repeat(98));
 
         for (Transaction t : transactions) {
             LocalDate date = t.getDate();
@@ -285,8 +342,15 @@ public class Transaction {
     }
     public static void displayReportUsingVendorName() {
         ArrayList<Transaction> transactions = readTransactions();
+        sortTransactions(transactions);
         String vendorName = Console.promptForString("Enter the name of the vendor");
 
+        System.out.printf(
+                "%-12s | %-10s | %-20s | %-18s | %12s | %12s%n",
+                "Date", "Time", "Description", "Vendor", "Amount", "Balance"
+        );
+
+        System.out.println("-".repeat(98));
 
         for (Transaction t : transactions) {
             String name = t.getVendor();
@@ -300,6 +364,13 @@ public class Transaction {
                         t.getBalance());
             }
         }
+    }
+    public static void sortTransactions(ArrayList<Transaction> transactions) {
+        transactions.sort(
+                Comparator.comparing(Transaction::getDate)
+                        .thenComparing(Transaction::getTime)
+                        .reversed()
+        );
     }
 }
 

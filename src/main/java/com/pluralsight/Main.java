@@ -63,11 +63,11 @@ public class Main {
                                 do {
                                     reportChoice = Console.promptForInt(
                                             "=== Reports Menu === \n" +
-                                                    "1) Generate report of -- Month To Date -- \n" +
-                                                    "2) Generate report of -- Previous Month -- \n" +
-                                                    "3) Generate report of -- Year To Date -- \n" +
-                                                    "4) Generate report of -- Previous Year --  \n" +
-                                                    "5) Generate report by -- Search By The Vendor -- \n" +
+                                                    "1) To Generate report -- Month To Date -- Enter (1)  \n" +
+                                                    "2) To Generate report -- Previous Month -- Enter (2)  \n" +
+                                                    "3) To Generate report -- Year To Date -- Enter (3)  \n" +
+                                                    "4) To Generate report -- Previous Year -- Enter (4) \n" +
+                                                    "5) To Generate report -- Search By The Vendor -- Enter (5) \n" +
                                                     "0) Enter -- 0 -- Back \n" +
                                                     "Enter Your Command: ");
                                     switch (reportChoice) {
@@ -85,12 +85,15 @@ public class Main {
                                             break;
                                         case 5:
                                             Transaction.displayReportUsingVendorName();
+                                            break;
+                                        case 0:
+                                            break;
                                         default:
                                             System.out.println("Invalid choice! Please try again.");
                                             break;
                                     }
                                 } while (reportChoice != 0);
-
+                                break;
                             case "H":
                                 break;
                             default:
@@ -98,6 +101,7 @@ public class Main {
                                 break;
                         }
                     } while(!ledgerChoice.equals("H"));
+                    break;
                 case"X" :
                     break;
                 default: System.out.println("Invalid choice! Please try again.");
