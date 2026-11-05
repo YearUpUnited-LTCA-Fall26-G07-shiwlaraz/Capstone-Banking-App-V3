@@ -12,7 +12,7 @@ public class Console {
         System.out.println(prompt);
         return myScanner.nextLine();
     }
-    public static int promptForInt(int prompt) {
+    public static int promptForInt(String prompt) {
         while (true) {
             try {
                 System.out.println(prompt);

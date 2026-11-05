@@ -73,7 +73,15 @@ public class Transaction {
             br1.readLine();
 
             while((Line = br1.readLine()) != null) {
+                if (Line.isBlank()) {
+                    continue;
+                }
                 String[] split = Line.split("[|]");
+
+                if (split.length < 6 || split[0].trim().isEmpty()) {
+                    System.out.println("Skipping invalid row: " + Line);
+                    continue;
+                }
 
                 LocalDate date = LocalDate.parse(split[0].trim());
                 LocalTime time = LocalTime.parse(split[1].trim());
@@ -155,12 +163,135 @@ public class Transaction {
         }
 
     }
+    public static void displayAllTransactions () {
+        ArrayList<Transaction> transactions = readTransactions();
+        for (Transaction t : transactions) {
+            System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
+                    t.getDate(),
+                    t.getTime(),
+                    t.getDescription(),
+                    t.getVendor(),
+                    t.getAmount(),
+                    t.getBalance());
+        }
+    }
     public static void displayDeposits() {
         ArrayList<Transaction> transactions = readTransactions();
 
         for (Transaction t : transactions) {
             if (t.getAmount() > 0) {
-                System.out.printf("    %s       |      %s      |     %s      |     %s      |    %.2f     |     %.2f%n    ",
+                System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
+                        t.getDate(),
+                        t.getTime(),
+                        t.getDescription(),
+                        t.getVendor(),
+                        t.getAmount(),
+                        t.getBalance());
+            }
+        }
+    }
+    public static void displayPayments() {
+        ArrayList<Transaction> transactions = readTransactions();
+        for (Transaction t : transactions) {
+            if (t.getAmount() < 0) {
+                System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
+                        t.getDate(),
+                        t.getTime(),
+                        t.getDescription(),
+                        t.getVendor(),
+                        t.getAmount(),
+                        t.getBalance());
+            }
+        }
+    }
+    public static void displayReportMonthToDate() {
+        ArrayList<Transaction> transactions = readTransactions();
+        LocalDate startDate = LocalDate.now().withDayOfMonth(1);
+        LocalDate endDate = LocalDate.now();
+
+        for (Transaction t : transactions) {
+            LocalDate date = t.getDate();
+            if (!date.isBefore(startDate) && !date.isAfter(endDate)) {
+                System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
+                        t.getDate(),
+                        t.getTime(),
+                        t.getDescription(),
+                        t.getVendor(),
+                        t.getAmount(),
+                        t.getBalance());
+            }
+        }
+    }
+    public static void displayReportOfPreviousMonth() {
+        ArrayList<Transaction> transactions = readTransactions();
+        LocalDate startDate = LocalDate.now().minusMonths(1).withDayOfMonth(1);
+        LocalDate endDate = LocalDate.now().withDayOfMonth(1).minusDays(1);
+
+
+
+        for (Transaction t : transactions) {
+            LocalDate date = t.getDate();
+            if (!date.isBefore(startDate) && !date.isAfter(endDate)) {
+                System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
+                        t.getDate(),
+                        t.getTime(),
+                        t.getDescription(),
+                        t.getVendor(),
+                        t.getAmount(),
+                        t.getBalance());
+            }
+        }
+    }
+    public static void displayReportYearToDate() {
+        ArrayList<Transaction> transactions = readTransactions();
+
+
+        LocalDate startDate = LocalDate.now().withMonth(1).withDayOfMonth(1);
+        LocalDate endDate = LocalDate.now();
+
+        for (Transaction t : transactions) {
+            LocalDate date = t.getDate();
+            if (!date.isBefore(startDate) && !date.isAfter(endDate)) {
+                System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
+                        t.getDate(),
+                        t.getTime(),
+                        t.getDescription(),
+                        t.getVendor(),
+                        t.getAmount(),
+                        t.getBalance());
+            }
+        }
+    }
+
+    public static void displayReportOfPreviousYear() {
+        ArrayList<Transaction> transactions = readTransactions();
+
+        LocalDate startDate = LocalDate.now().minusYears(1).withMonth(1).withDayOfMonth(1);
+        LocalDate endDate = LocalDate.now().withMonth(1).minusDays(1);
+
+        for (Transaction t : transactions) {
+            LocalDate date = t.getDate();
+            if(!date.isBefore(startDate) && !date.isAfter(endDate)) {
+                System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
+                        t.getDate(),
+                        t.getTime(),
+                        t.getDescription(),
+                        t.getVendor(),
+                        t.getAmount(),
+                        t.getBalance());
+            }
+        }
+
+    }
+    public static void displayReportUsingVendorName() {
+        ArrayList<Transaction> transactions = readTransactions();
+        String vendorName = Console.promptForString("Enter the name of the vendor");
+
+
+        for (Transaction t : transactions) {
+            String name = t.getVendor();
+            if (t.getVendor().equalsIgnoreCase(vendorName)) {
+                System.out.printf( "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
                         t.getDate(),
                         t.getTime(),
                         t.getDescription(),
