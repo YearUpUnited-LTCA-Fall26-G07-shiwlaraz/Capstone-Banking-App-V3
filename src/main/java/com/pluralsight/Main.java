@@ -88,6 +88,7 @@ public class Main {
                                             break;
                                         case 6:
                                             Transaction.displayReportByCustomSearch();
+                                            break;
                                         case 0:
                                             break;
                                         default:

@@ -29,21 +29,22 @@ public class Transaction {
     public void setDate(LocalDate date){
         this.date = date;
     }
-    public void setTime(LocalTime Time){
+    public void setTime(LocalTime time) {
         this.time = time;
     }
-    public void setDescription(String Description) {
+    public void setDescription(String description) {
         this.description = description;
     }
     public void setVendor(String vendor) {
         this.vendor = vendor;
     }
     public void setAmount(double amount) {
+        this.amount = amount;
+    }
+    public void setBalance (double balance) {
         this.balance = balance;
     }
-    public LocalDate setDate(){
-        return date;
-    }
+
     public LocalDate getDate() {
         return date;
     }
@@ -423,6 +424,7 @@ public class Transaction {
     }
 
     public static void sortTransactions(ArrayList<Transaction> transactions) {
+        //The comparator to sort the transaction
         transactions.sort(
                 Comparator.comparing(Transaction::getDate)
                         .thenComparing(Transaction::getTime)
