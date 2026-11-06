@@ -7,8 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         showHomeScreen();
-
-/*        ArrayList<Transaction> transactions = Transaction.readTransactions();
+        /*        ArrayList<Transaction> transactions = Transaction.readTransactions();
        for (Transaction t : transactions) {
             System.out.printf("  %s   |   %s   |   %s   |   %s   |  %.2f   |   %.2f%n   ",
                     t.getDate(),
@@ -68,6 +67,7 @@ public class Main {
                                                     "3) To Generate report -- Year To Date -- Enter (3)  \n" +
                                                     "4) To Generate report -- Previous Year -- Enter (4) \n" +
                                                     "5) To Generate report -- Search By The Vendor -- Enter (5) \n" +
+                                                    "6) To Generate report -- By Custome Search -- Enter (6) \n"+
                                                     "0) Enter -- 0 -- Back \n" +
                                                     "Enter Your Command: ");
                                     switch (reportChoice) {
@@ -86,6 +86,8 @@ public class Main {
                                         case 5:
                                             Transaction.displayReportUsingVendorName();
                                             break;
+                                        case 6:
+                                            Transaction.displayReportByCustomSearch();
                                         case 0:
                                             break;
                                         default:

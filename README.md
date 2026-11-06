@@ -37,6 +37,7 @@ file and lets users view their ledger and reports.
 - `displayReportOfPreviousYear()` — Shows last year's transactions.
 - `displayReportUsingVendorName()` — Finds transactions by vendor.
 - `sortTransactions()` — Sorts transactions from newest to oldest.
+- `displayReportByCustomSearch()` — To prompt for custom search by (Start date, End date, Description, vendor and mount.
 
 ## CSV Format
 `date|time|description|vendor|amount|Balance`

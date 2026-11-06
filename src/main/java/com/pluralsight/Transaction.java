@@ -365,6 +365,63 @@ public class Transaction {
             }
         }
     }
+    public static void displayReportByCustomSearch() {
+
+        String date = Console.promptForString("Enter the start date (yyyy-MM-dd), or press Enter to skip:");
+        LocalDate startDate = null;
+
+        if (!date.isBlank()) {
+            startDate = LocalDate.parse(date);
+        }
+
+        String date2 = Console.promptForString("Enter the end date (yyyy-MM-dd), or press Enter to skip:");
+        LocalDate endDate = null;
+
+        if (!date2.isBlank()) {
+            endDate = LocalDate.parse(date2);
+        }
+
+        String description = Console.promptForString("Enter the description or press Enter to skip:");
+        String vendor = Console.promptForString("Enter the vendor name or press Enter to skip:");
+
+        String doubleAmount = Console.promptForString("Enter the amount or press Enter to skip:");
+        Double amount = null;
+
+        if (!doubleAmount.isBlank()) {
+            amount = Double.parseDouble(doubleAmount);
+        }
+
+        ArrayList<Transaction> transactions = readTransactions();
+        sortTransactions(transactions);
+
+        for (Transaction t : transactions) {
+            // If start date is blank, skip it. Otherwise, check if the transaction date is on or after the start date
+            if ((startDate == null || !t.getDate().isBefore(startDate))
+                    // If end date is blank, skip it.Otherwise, check if the transaction date is on or before the end date.
+                    && (endDate == null || !t.getDate().isAfter(endDate))
+
+                    // If description is blank, skip it. Otherwise, check if the transaction description contains the entered text.
+                    && (description.isBlank() || t.getDescription().toLowerCase().contains(description.toLowerCase()))
+
+                    // If vendor is blank, skip it.Otherwise, check if the vendor name contains the entered text.
+                    && (vendor.isBlank() || t.getVendor().toLowerCase().contains(vendor.toLowerCase()))
+
+                    // If amount is blank (null), skip it. Otherwise, check if the transaction amount matches the entered amount
+                    && (amount == null || Double.compare(t.getAmount(), amount) == 0)) {
+
+                System.out.printf(
+                        "%-12s | %-10s | %-20s | %-18s | %12.2f | %12.2f%n",
+                        t.getDate(),
+                        t.getTime(),
+                        t.getDescription(),
+                        t.getVendor(),
+                        t.getAmount(),
+                        t.getBalance()
+                );
+            }
+        }
+    }
+
     public static void sortTransactions(ArrayList<Transaction> transactions) {
         transactions.sort(
                 Comparator.comparing(Transaction::getDate)
